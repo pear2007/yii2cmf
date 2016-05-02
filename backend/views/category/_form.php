@@ -20,6 +20,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_nav')->checkboxList([1 => '是']) ?>
 
+    <?php
+    echo $form->field($model, 'is_nav')->radioList(['1'=>'是','0'=>'否'])
+    ?>
     <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
 
     <div class="form-group">
