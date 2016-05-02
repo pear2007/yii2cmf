@@ -90,14 +90,15 @@ class Category extends \yii\db\ActiveRecord
         return $tree;
     }
 
-    public static function treeList($tree = [], &$result = [], $deep = 0, $separator = '--')
+    public static function treeList($tree = [], &$result = [], $deep = 0, $separator = '─')
     {
         if (empty($tree)) {
             $tree = self::tree();
         }
         $deep++;
         foreach($tree as $list) {
-            $list['title'] = str_repeat($separator, $deep-1) . $list['title'];
+            $ico= $deep>1?'└':'';
+            $list['title'] = str_repeat($separator, $deep-1) .$ico. $list['title'];
             $result[] = $list;
             if (isset($list['_child'])) {
                 self::treeList($list['_child'], $result, $deep, $separator);
@@ -108,14 +109,15 @@ class Category extends \yii\db\ActiveRecord
     /**
      * 分类名下拉列表
      */
-    public static function getDropDownlist($tree = [], &$result = [], $deep = 0, $separator = '--')
+    public static function getDropDownlist($tree = [], &$result = [], $deep = 0, $separator = '─')
     {
         if (empty($tree)) {
             $tree = self::tree();
         }
         $deep++;
         foreach($tree as $list) {
-            $result[$list['id']] = str_repeat($separator, $deep-1) . $list['title'];
+            $ico= $deep>1?'└':'';
+            $result[$list['id']] =$ico. str_repeat($separator, $deep-1) . $list['title'];
             if (isset($list['_child'])) {
                 self::getDropDownlist($list['_child'], $result, $deep);
             }
